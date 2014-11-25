@@ -8,6 +8,7 @@ require 'json'
 require 'filewatcher'
 require 'launchy'
 require 'mimemagic'
+require 'terminal-notifier'
 
 module ShopifyTheme
   EXTENSIONS = [
@@ -231,8 +232,12 @@ module ShopifyTheme
         ShopifyTheme.send_asset(data)
       end
       if response.success?
-        say("[#{timestamp}] Uploaded: #{asset}", :green) unless quiet
+        unless quiet
+          TerminalNotifier.notify(asset, title: 'Shopify Theme', subtitle: 'Uploaded')
+          say("[#{timestamp}] Uploaded: #{asset}", :green)
+        end
       else
+        TerminalNotifier.notify(response, title: 'Shopify Theme', subtitle: "Could not upload #{asset}")
         report_error(Time.now, "Could not upload #{asset}", response)
       end
     end

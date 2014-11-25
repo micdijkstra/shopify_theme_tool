@@ -20,11 +20,12 @@ Gem::Specification.new do |s|
   s.add_dependency('mimemagic')
   s.add_dependency('filewatcher')
   s.add_dependency('launchy')
+  s.add_dependency('terminal-notifier')
 
   s.add_development_dependency 'rake'
   s.add_development_dependency 'minitest', '>= 5.0.0'
   s.add_development_dependency 'pry'
-  s.add_development_dependency 'pry-debugger'
+  #s.add_development_dependency 'pry-debugger'
 
   s.files         = `git ls-files`.split("\n")
   s.test_files    = `git ls-files -- {test,spec,features}/*`.split("\n")
