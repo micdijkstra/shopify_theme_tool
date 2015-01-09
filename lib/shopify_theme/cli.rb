@@ -11,6 +11,7 @@ require 'mimemagic'
 require 'terminal-notifier'
 
 module ShopifyTheme
+  THEME_FOLDER = "#{Dir.pwd}/theme"
   EXTENSIONS = [
     {mimetype: 'application/x-liquid', extensions: %w(liquid), parents: 'text/plain'},
     {mimetype: 'application/json', extensions: %w(json), parents: 'text/plain'},
@@ -138,9 +139,9 @@ module ShopifyTheme
     method_option :quiet, :type => :boolean, :default => false
     method_option :keep_files, :type => :boolean, :default => false
     def watch
-      puts "Watching current folder: #{Dir.pwd}"
+      puts "Watching current folder: #{THEME_FOLDER}"
       watcher do |filename, event|
-        filename = filename.gsub("#{Dir.pwd}/", '')
+        filename = filename.gsub("#{THEME_FOLDER}", '')
 
         next unless local_assets_list.include?(filename)
         action = if [:changed, :new].include?(event)
@@ -182,7 +183,7 @@ module ShopifyTheme
     private
 
     def watcher
-      FileWatcher.new(Dir.pwd).watch() do |filename, event|
+      FileWatcher.new(THEME_FOLDER).watch() do |filename, event|
         yield(filename, event)
       end
     end
